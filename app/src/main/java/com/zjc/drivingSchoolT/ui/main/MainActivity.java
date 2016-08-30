@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
             SimpleDraweeView sdIcon = (SimpleDraweeView) headerView.findViewById(R.id.personal_main_frg_sd_icon);
             TextView tvName = (TextView) headerView.findViewById(R.id.personal_main_frg_tv_name);
-            ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_IP + userInfo.getLogo());
-            tvName.setText(userInfo.getSchoolname() + "");
+            ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_IP + userInfo.getPhoto());
+            tvName.setText(userInfo.getTeachername() + "");
         } else {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override

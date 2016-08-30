@@ -1,44 +1,53 @@
 package com.zjc.drivingSchoolT.db.models;
 
-import java.io.Serializable;
+import com.zjc.drivingSchoolT.db.model.AppResponse;
 
 
-public class UserInfo implements Serializable {
+public class UserInfo extends AppResponse {
+
 
     /**
-     * code : 200
-     * latitude : 30.503949
-     * longitude : 114.439444
-     * message : 登陆成功
-     * synopsis :
+     * experience : null
+     * gender : null
+     * identityno :
+     * loginname : jiaolian2
+     * phone : 13568974896
+     * photo : /images/nan.jpg
+     * teachername : 舟舟
+     * uid : fccffbf2624942ad99ade86daa47f195
      */
 
-    private String uid;// 用户ID
+    private int experience;
+    private boolean gender;
+    private String identityno;
+    private String loginname;
+    private String phone;
+    private String photo;
+    private String teachername;
+    private String uid;
 
-    private String loginname;// 用户名
-
-    private String schoolname;// 驾校名称
-
-    private String logo;// 驾校LOGO
-
-    private String address;// 驾校地址
-
-    private String website;// 驾校主页
-
-    private String contacts;// 驾校联系人
-
-    private String contactsphone;// 联系人电话
-
-    private double latitude;
-    private double longitude;
-    private String synopsis;
-
-    public String getUid() {
-        return uid;
+    public int getExperience() {
+        return experience;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    public String getIdentityno() {
+        return identityno;
+    }
+
+    public void setIdentityno(String identityno) {
+        this.identityno = identityno;
     }
 
     public String getLoginname() {
@@ -49,75 +58,35 @@ public class UserInfo implements Serializable {
         this.loginname = loginname;
     }
 
-    public String getSchoolname() {
-        return schoolname;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setSchoolname(String schoolname) {
-        this.schoolname = schoolname;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getLogo() {
-        return logo;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public String getAddress() {
-        return address;
+    public String getTeachername() {
+        return teachername;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setTeachername(String teachername) {
+        this.teachername = teachername;
     }
 
-    public String getWebsite() {
-        return website;
+    public String getUid() {
+        return uid;
     }
 
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public String getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
-    }
-
-    public String getContactsphone() {
-        return contactsphone;
-    }
-
-    public void setContactsphone(String contactsphone) {
-        this.contactsphone = contactsphone;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getSynopsis() {
-        return synopsis;
-    }
-
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

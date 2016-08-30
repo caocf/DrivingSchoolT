@@ -38,8 +38,8 @@ public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
         private TextView tvStatus;
         private TextView tvNumber;
         private TextView tvTime;
-        private TextView tvReceive;
-        private TextView tvDistribution;
+        private TextView tvStart;
+        private TextView tvFinish;
         private TextView tvMoney;
 
         public OrderManagerFrgViewHolder(ViewGroup parent) {
@@ -48,8 +48,8 @@ public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
             tvStatus = $(R.id.order_status);
             tvNumber = $(R.id.order_number);
             tvTime = $(R.id.order_time);
-            tvReceive = $(R.id.order_receive);
-            tvDistribution = $(R.id.order_distribution);
+            tvStart = $(R.id.order_start);
+            tvFinish = $(R.id.order_finish);
             tvMoney = $(R.id.order_money);
         }
 
@@ -62,68 +62,67 @@ public class StudyOrderAdapter extends ZBaseRecyclerViewAdapter {
             tvNumber.setText(service.getContactsname());
             tvTime.setText(service.getContactsphone());
             tvMoney.setText(service.getTotal() + "");
-//            tvStatus.setText(ConstantsParams.getStatus(service.getState()));
+            tvStatus.setText(ConstantsParams.getStatus(service.getState()));
             //	1.预订成功 2.已支付 3.申请退订 4.已退订 5.消费中 6.已消费 7.待评价 8.已完成 9.已取消
-            if (service.getState().equals(ConstantsParams.STUDY_ORDER_ONE)) {
-                tvReceive.setVisibility(View.VISIBLE);
-                tvDistribution.setVisibility(View.GONE);
-            } else if (service.getState().equals(ConstantsParams.STUDY_ORDER_TWO)) {
-                tvReceive.setVisibility(View.GONE);
-                tvDistribution.setVisibility(View.VISIBLE);
-            } else if (service.getState().equals(ConstantsParams.STUDY_ORDER_SEVEN)) {
-                tvReceive.setVisibility(View.GONE);
-                tvDistribution.setVisibility(View.GONE);
+            if (service.getState().equals(ConstantsParams.STUDY_ORDER_TWO)) {
+                tvStart.setVisibility(View.VISIBLE);
+                tvFinish.setVisibility(View.GONE);
+            } else if (service.getState().equals(ConstantsParams.STUDY_ORDER_FIVE)) {
+                tvStart.setVisibility(View.GONE);
+                tvFinish.setVisibility(View.VISIBLE);
             } else {
-                tvReceive.setVisibility(View.GONE);
-                tvDistribution.setVisibility(View.GONE);
+                tvStart.setVisibility(View.GONE);
+                tvFinish.setVisibility(View.GONE);
             }
 
-            tvReceive.setTag(service);
-            tvReceive.setOnClickListener(new ReceiveOnClickListener());
-            tvDistribution.setTag(service);
-            tvDistribution.setOnClickListener(new DistributionOnClickListener());
+            tvStart.setTag(service);
+            tvStart.setOnClickListener(new StartOnClickListener());
+            tvFinish.setTag(service);
+            tvFinish.setOnClickListener(new FinishOnClickListener());
         }
     }
 
     /**
-     * 分配订单
+     * 开始练车
      */
-    class DistributionOnClickListener implements View.OnClickListener {
+    class StartOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             OrderItem item = (OrderItem) v.getTag();
-            startDistributionOrder(item);
+            startStudyOrder(item);
         }
     }
 
-    /**
-     * 接受订单
-     */
-    class ReceiveOnClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            OrderItem item = (OrderItem) v.getTag();
-            ReceiveStudyOrder(item);
-        }
-    }
-
-    private void ReceiveStudyOrder(final OrderItem item) {
-        ApiHttpClient.getInstance().receiveStudyOrder(SharePreferencesUtil.getInstance().readUser().getUid(), item.getOrid(), new ResultResponseHandler(getContext(), "正在接单") {
+    private void startStudyOrder(final OrderItem item) {
+        ApiHttpClient.getInstance().startStudyOrder(SharePreferencesUtil.getInstance().readUser().getUid(), item.getOrid(), new ResultResponseHandler(getContext(), "开始练车") {
 
             @Override
             public void onResultSuccess(String result) {
-                item.setState(ConstantsParams.STUDY_ORDER_TWO);
+                item.setState(ConstantsParams.STUDY_ORDER_FIVE);
                 StudyOrderAdapter.this.notifyDataSetChanged();
-                //跳转到分配界面
-                startDistributionOrder(item);
             }
         });
     }
 
-    private void startDistributionOrder(OrderItem item) {
-        ZBaseFragment fragment = (ZBaseFragment) ((AppCompatActivity) getContext()).getSupportFragmentManager().getFragments().get(0);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.ARGUMENT,item);
-        fragment.startActivity(ReceiveActivity.class,bundle);
+    /**
+     * 完成练车
+     */
+    class FinishOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            OrderItem item = (OrderItem) v.getTag();
+            finishStudyOrder(item);
+        }
+    }
+
+    private void finishStudyOrder(final OrderItem item) {
+        ApiHttpClient.getInstance().finishStudyOrder(SharePreferencesUtil.getInstance().readUser().getUid(), item.getOrid(), new ResultResponseHandler(getContext(), "结束练车") {
+
+            @Override
+            public void onResultSuccess(String result) {
+                item.setState(ConstantsParams.STUDY_ORDER_SIX);
+                StudyOrderAdapter.this.notifyDataSetChanged();
+            }
+        });
     }
 }

@@ -30,30 +30,8 @@ import de.greenrobot.event.EventBus;
  * Created by Administrator on 2016/8/17.
  */
 public class StudyListFragment extends ZBaseFragment implements SwipeRefreshLayout.OnRefreshListener, ZBaseRecyclerViewAdapter.OnLoadMoreListener, ZBaseRecyclerViewAdapter.OnItemClickListener {
-    private String orderStatus;
     private EasyRecyclerView mRecyclerView;
     private StudyOrderAdapter mAdapter;
-
-    /**
-     * 传入需要的参数，设置给arguments
-     */
-    public static StudyListFragment newInstance(String bean) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.ARGUMENT, bean);
-        StudyListFragment fragment = new StudyListFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            orderStatus = (String) bundle.getSerializable(Constants.ARGUMENT);
-        }
-    }
 
     @Override
     protected int inflateContentView() {

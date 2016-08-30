@@ -90,11 +90,11 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
                 }
 
                 final UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
-                userInfo.setAddress(address);
-                userInfo.setContacts(name);
-                userInfo.setContactsphone(phone);
-                userInfo.setSchoolname(schoolName);
-                userInfo.setSynopsis(desc);
+//                userInfo.setAddress(address);
+//                userInfo.setContacts(name);
+//                userInfo.setContactsphone(phone);
+//                userInfo.setSchoolname(schoolName);
+//                userInfo.setSynopsis(desc);
                 ApiHttpClient.getInstance().updateUserinfo(userInfo, new ResultResponseHandler(getActivity(), "正在保存") {
                     @Override
                     public void onResultSuccess(String result) {
@@ -151,12 +151,12 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
     }
 
     private void setPersonInfo(UserInfo userInfo) {
-        tvSchoolName.setText(userInfo.getSchoolname());
-        tvName.setText(userInfo.getContacts());
-        tvAddress.setText(userInfo.getAddress());
-        tvPhone.setText(userInfo.getContactsphone());
-        tvDesc.setText(userInfo.getSynopsis());
-        ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_IP + userInfo.getLogo());
+//        tvSchoolName.setText(userInfo.getSchoolname());
+//        tvName.setText(userInfo.getContacts());
+//        tvAddress.setText(userInfo.getAddress());
+//        tvPhone.setText(userInfo.getContactsphone());
+//        tvDesc.setText(userInfo.getSynopsis());
+        ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_IP + userInfo.getPhoto());
 
         sdIcon.setOnClickListener(this);
     }
@@ -197,7 +197,7 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
                 //更新用户头像
                 UserInfo beforeUserInfo = SharePreferencesUtil.getInstance().readUser();
                 SchoolLogoResponse userInfo = new SchoolLogoResponseParser().parseResultMessage(result);
-                beforeUserInfo.setLogo(userInfo.getLogourl());
+                beforeUserInfo.setPhoto(userInfo.getLogourl());
                 SharePreferencesUtil.getInstance().saveUser(beforeUserInfo);
                 ImageLoader.getInstance().displayImage(sdIcon, Constants.BASE_IP + userInfo.getLogourl());
             }
@@ -216,23 +216,10 @@ public class PersonalFragment extends ZBaseToolBarFragment implements View.OnCli
                 return;
             }
             mLocClient.stop();
-            updateLatLng(location.getLatitude(), location.getLongitude());
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
         }
-    }
-
-    private void updateLatLng(double lat, double lng) {
-        final UserInfo userInfo = SharePreferencesUtil.getInstance().readUser();
-        userInfo.setLatitude(lat);
-        userInfo.setLongitude(lng);
-        ApiHttpClient.getInstance().updateUserinfo(userInfo, new ResultResponseHandler(getActivity(), "更新坐标，请稍等") {
-            @Override
-            public void onResultSuccess(String result) {
-                SharePreferencesUtil.getInstance().saveUser(userInfo);
-            }
-        });
     }
 
     @Override

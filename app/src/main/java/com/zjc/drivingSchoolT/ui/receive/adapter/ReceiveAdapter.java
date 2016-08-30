@@ -81,7 +81,7 @@ public class ReceiveAdapter extends ZBaseRecyclerViewAdapter {
     }
 
     private void distributionStudyOrder(final TeacherItem item) {
-        ApiHttpClient.getInstance().distributionStudyOrder(SharePreferencesUtil.getInstance().readUser().getUid(), orderItem.getOrid(), item.getTid(), new ResultResponseHandler(getContext(), "正在接单") {
+        ApiHttpClient.getInstance().finishStudyOrder(SharePreferencesUtil.getInstance().readUser().getUid(), orderItem.getOrid(),new ResultResponseHandler(getContext(), "正在接单") {
 
             @Override
             public void onResultSuccess(String result) {

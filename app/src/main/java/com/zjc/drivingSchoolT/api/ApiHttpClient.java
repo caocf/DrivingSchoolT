@@ -122,13 +122,13 @@ public class ApiHttpClient {
     public void updateUserinfo(UserInfo userInfo, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userInfo.getUid());
-        postRequest.addProperty("latitude", userInfo.getLatitude());
-        postRequest.addProperty("longitude", userInfo.getLongitude());
-        postRequest.addProperty("address", userInfo.getAddress());
-        postRequest.addProperty("contacts", userInfo.getContacts());
-        postRequest.addProperty("contactsphone", userInfo.getContactsphone());
-        postRequest.addProperty("schoolname", userInfo.getSchoolname());
-        postRequest.addProperty("synopsis", userInfo.getSynopsis());
+//        postRequest.addProperty("latitude", userInfo.getLatitude());
+//        postRequest.addProperty("longitude", userInfo.getLongitude());
+//        postRequest.addProperty("address", userInfo.getAddress());
+//        postRequest.addProperty("contacts", userInfo.getContacts());
+//        postRequest.addProperty("contactsphone", userInfo.getContactsphone());
+//        postRequest.addProperty("schoolname", userInfo.getSchoolname());
+//        postRequest.addProperty("synopsis", userInfo.getSynopsis());
         HttpUtilsAsync.post(Constants.BASE_URL + "subinfo", postRequest, asyncHttpResponseHandler);
     }
 
@@ -273,7 +273,7 @@ public class ApiHttpClient {
         postRequest.addProperty("uid", userId);
         postRequest.addProperty("offset", start);
         postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
-        HttpUtilsAsync.post(Constants.BASE_URL + "order/take/list", postRequest, asyncHttpResponseHandler);
+        HttpUtilsAsync.post(Constants.BASE_URL + "order/list", postRequest, asyncHttpResponseHandler);
     }
 
     /**
@@ -319,28 +319,27 @@ public class ApiHttpClient {
 
 
     /**
-     * 1.1.26 学车订单-接单
+     * 练车开始
      * 参数：orid  uid
-     * 调用示例：/order/take/sub
+     * 调用示例：order/training/start
      */
-    public void receiveStudyOrder(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+    public void startStudyOrder(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userId);
         postRequest.addProperty("orid", orid);
-        HttpUtilsAsync.post(Constants.BASE_URL + "order/take/sub", postRequest, asyncHttpResponseHandler);
+        HttpUtilsAsync.post(Constants.BASE_URL + "order/training/start", postRequest, asyncHttpResponseHandler);
     }
 
     /**
-     * 1.1.26 学车订单-分配教练
+     * 练车结束
      * 参数：orid  uid tid
-     * 调用示例：order/teacher/allot
+     * 调用示例：order/training/end
      */
-    public void distributionStudyOrder(String userId, String orid, String tid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
+    public void finishStudyOrder(String userId, String orid, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userId);
         postRequest.addProperty("orid", orid);
-        postRequest.addProperty("tid", tid);
-        HttpUtilsAsync.post(Constants.BASE_URL + "order/teacher/allot", postRequest, asyncHttpResponseHandler);
+        HttpUtilsAsync.post(Constants.BASE_URL + "order/training/end", postRequest, asyncHttpResponseHandler);
     }
 
     /**
