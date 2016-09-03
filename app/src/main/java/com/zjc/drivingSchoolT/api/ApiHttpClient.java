@@ -272,6 +272,7 @@ public class ApiHttpClient {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userId);
         postRequest.addProperty("offset", start);
+        postRequest.addProperty("istrain", true);
         postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
         HttpUtilsAsync.post(Constants.BASE_URL + "order/list", postRequest, asyncHttpResponseHandler);
     }
@@ -365,6 +366,7 @@ public class ApiHttpClient {
     public void startOrders(String userId, int start, String status, AsyncHttpResponseHandler asyncHttpResponseHandler) {
         JsonObject postRequest = new JsonObject();
         postRequest.addProperty("uid", userId);
+        postRequest.addProperty("istrain", true);
         postRequest.addProperty("offset", start);
         postRequest.addProperty("pagesize", ConstantsParams.PAGE_SIZE);
         HttpUtilsAsync.post(Constants.BASE_URL + "signuporder/take/list", postRequest, asyncHttpResponseHandler);
